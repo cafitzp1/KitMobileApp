@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Kit Mobile App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="css/w3.css" />
+  <link rel="stylesheet" type="text/css" href="css/index.css" />
+
+  <!-- This is not a secure content policy, should be locked down for prod -->
+  <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' 
+					https://ssl.gstatic.com https://*.phonegap.com; 
+				style-src 'self' 'unsafe-inline'; 
+				script-src  'self' 'unsafe-inline' 'unsafe-eval' 
+					https://*.phonegap.com ;
+				media-src *" /> -->
+</head>
+
+<body>
+
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-white w3-card" id="nav-bar">
+
+    <!-- Navbar links -->
+    <div class="w3-right w3-hide-small w3-hide-medium">
+      <a href="#home" onclick="showDiv('account-settings-div', w3_close)" class="w3-bar-item w3-button"><i class="fa fa-cog"></i> ACCOUNT SETTINGS</a>
+      <a href="#home" onclick="showDiv('manage-group-div', w3_close)" class="w3-bar-item w3-button"><i class="fa fa-wrench"></i> MANAGE GROUP</a>
+      <a href="#home" onclick="showDiv('alert-group-div', w3_close)" class="w3-bar-item w3-button"><i class="fa fa-exclamation-triangle"></i> ALERT GROUP</a>
+    </div>
+
+    <!-- Hide links on small screens and replace them with a menu icon -->
+    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-hide-large" onclick="w3_open()">
+      <i class="fa fa-bars"></i>
+    </a>
+    <a href="#home" onclick="showDiv('map-div', w3_close)" class="w3-bar-item w3-button w3-display-middle w3-wide">KIT</a>
+  </div>
+</div>
+
+<!-- Sidebar on small screens when clicking the menu icon -->
+<nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-large" style="display:none; z-index:4; width: 75vw;"
+  id="side-nav">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Close
+    &times;</a>
+  <hr class="side-nav-divider">
+  <a href="#home" onclick="showDiv('account-settings-div', w3_close)" class="w3-bar-item w3-button"><i class="side-nav-icon fa fa-cog fa-lg"></i> ACCOUNT SETTINGS</a>
+  <a href="#home" onclick="showDiv('manage-group-div', w3_close)" class="w3-bar-item w3-button"><i class="side-nav-icon fa fa-wrench fa-lg"></i> MANAGE GROUP</a>
+  <a href="#home" onclick="showDiv('alert-group-div', w3_close)" class="w3-bar-item w3-button"><i class="side-nav-icon fa fa-exclamation-triangle fa-lg"></i> ALERT GROUP</a>
+</nav>
+
+<!-- Overlay for when side nav is opened -->
+<div id="nav-overlay" class="w3-overlay" onclick="w3_close()" style="cursor:pointer"></div>
+
+<!-- App home page main content section -->
+<div id="home">
+
+  <!-- Map section (content is injected from index.js) -->
+  <div id="map-div" class="w3-display-container app-section"></div>
+
+  <!-- Account settings section -->
+  <div id="account-settings-div" class="w3-display-container app-section">
+    <h3 class="w3-center w3-padding-32 w3-opacity">ACCOUNT SETTINGS</h3>
+  </div>
+
+  <!-- Manage group section -->
+  <div id="manage-group-div" class="w3-display-container app-section">
+    <h3 class="w3-center w3-padding-32 w3-opacity">MANAGE GROUP</h3>
+  </div>
+
+  <!-- Alert group section -->
+  <div id="alert-group-div" class="w3-display-container app-section">
+    <h3 class="w3-center w3-padding-32 w3-opacity">ALERT GROUP</h3>
+  </div>
+</div>
+
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="./js/index.js"></script>
+<script type="text/javascript" src="./js/appSettings.js"></script>
+
+</body>
+
+</html>
