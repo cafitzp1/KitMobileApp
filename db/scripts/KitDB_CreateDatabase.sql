@@ -1,0 +1,57 @@
+USE db_test_cafitzp1;
+
+SET FOREIGN_KEY_CHECKS=0; 
+DROP TABLE IF EXISTS SystemUser;
+CREATE TABLE SystemUser (
+    `SystemUserID` INT NOT NULL AUTO_INCREMENT
+    , `Name` VARCHAR(40) NOT NULL
+    , `Email` VARCHAR(40)
+    , `Username` VARCHAR(40) NOT NULL
+    , `Password` VARCHAR(40) NOT NULL
+    , `InitialGroupID` INT NOT NULL
+    , `CurrentGroupID` INT NOT NULL
+    , PRIMARY KEY (`SystemUserID`)
+);
+
+DROP TABLE IF EXISTS NotificationType;
+CREATE TABLE NotificationType (
+    `NotificationTypeID` INT NOT NULL AUTO_INCREMENT
+    , `Name` VARCHAR(40) NOT NULL
+    , PRIMARY KEY (`NotificationTypeID`)
+);
+
+DROP TABLE IF EXISTS Notification;
+CREATE TABLE Notification (
+    `NotificationID` INT NOT NULL AUTO_INCREMENT
+    , `DateCreated` DATE NOT NULL
+    , `Message` VARCHAR(255)
+    , `Active` BIT NOT NULL
+    , `UserTo` INT NOT NULL
+    , `UserFrom` INT NOT NULL
+    , `NotificationTypeID` INT NOT NULL
+    , PRIMARY KEY (`NotificationID`)
+    , FOREIGN KEY (`UserTo`) REFERENCES SystemUser(`SystemUserID`)
+    , FOREIGN KEY (`UserFrom`) REFERENCES SystemUser(`SystemUserID`)
+    , FOREIGN KEY (`NotificationTypeID`) REFERENCES NotificationType(`NotificationTypeID`)
+);
+
+DROP TABLE IF EXISTS LocationType;
+CREATE TABLE LocationType (
+    `LocationTypeID` INT NOT NULL AUTO_INCREMENT
+    , `Name` VARCHAR(40) NOT NULL
+    , PRIMARY KEY (`LocationTypeID`)
+);
+
+DROP TABLE IF EXISTS Location;
+CREATE TABLE Location (
+    `LocationID` INT NOT NULL AUTO_INCREMENT
+    , `TimeLogged` DATE NOT NULL
+    , `Latitude` DECIMAL(10, 8)
+    , `Longitude` DECIMAL(11, 8)
+    , `SystemUserID` INT NOT NULL
+    , `LocationTypeID` INT NOT NULL
+    , PRIMARY KEY (`LocationID`)
+    , FOREIGN KEY (`SystemUserID`) REFERENCES SystemUser(`SystemUserID`)
+    , FOREIGN KEY (`LocationTypeID`) REFERENCES LocationType(`LocationTypeID`)
+);
+SET FOREIGN_KEY_CHECKS=1;
