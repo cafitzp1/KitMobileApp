@@ -4,9 +4,22 @@ body {
     width: 100vw;
 }
 
-#nav-bar {
-    height: 7vh;
-    display: block;
+.no-click-effect:focus,
+.no-click-effect:hover,
+.no-click-effect:active {
+    background-color: white !important;
+}
+
+.no-click-effect-black:focus,
+.no-click-effect-black:hover,
+.no-click-effect-black:active {
+    background-color: black !important;
+    color: white !important;
+}
+
+.button-primary:visited,
+.button-primary:hover {
+    color: #2196F3 !important
 }
 
 .app-section {
@@ -22,4 +35,49 @@ body {
     margin: 5px 28px -12px 28px;
     padding: 10px 0px;
     top: 50px;
+}
+
+.user-icon {
+    height: 50px;
+    width: 50px;
+    color: white;
+    background-color: rgb(30, 234, 165);
+}
+
+.user-icon-text {
+    font-weight: 500;
+    font-size: 24px;
+    margin: 5px 0px;
+}
+
+#invite-form label {
+    font-weight: 600;
+}
+
+#nav-bar {
+    height: 7vh;
+    display: block;
+}
+
+#nav-header {
+    padding: 8px 0px;
+    width: 260px;
+}
+
+#nav-button {
+    padding-top: 4px;
+}
+
+#manage-group-user-div {
+    padding: 20px 8px 0px 8px;
+}
+
+#manage-group-user-div .username-text,
+#manage-group-user-div .user-email-text {
+    margin: 0 6px;
+}
+
+#manage-group-user-div .username-text {
+    font-weight: 600;
+    font-size: 18px;
 }
