@@ -20,7 +20,7 @@ const load = true;
     // hide splash after 3s
     if (load) hideSplash(3000);
 
-    if (test) document.getElementById('alert-group-side-nav-button').click();
+    // if (test) document.getElementById('alert-group-side-nav-button').click();
 }
 
 // App entry point

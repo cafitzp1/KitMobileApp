@@ -74,7 +74,7 @@ body {
     display:none;
     z-index:4;
     width: 75vw;
-    opacity: .8;
+    /* opacity: .8; */
 }
 
 #map-div {
@@ -121,7 +121,7 @@ body {
 #alert-group-context-menu {
     top: 45%;
     width: 80vw;
-    opacity: .9;
+    opacity: .85;
 }
 
 #alert-group-context-menu hr {
