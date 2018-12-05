@@ -1,6 +1,7 @@
 /* jshint browser: true */
 /* jshint jquery: true */
 /* globals google: true, appSettings: true */
+const test = true;
 
 "use strict";
 
@@ -8,6 +9,11 @@
 {
     window.addEventListener("load", onDeviceReady);
     document.addEventListener("deviceready", onDeviceReady, false);
+
+    // click home to correct heights
+    document.getElementById('nav-header').click();
+
+    if (test) document.getElementById('manage-group-side-nav-button').click();
 }
 
 // App entry point
@@ -41,7 +47,25 @@ function showDiv(divID, done) {
 
     // show the div passed as an arg, hide the side nav
     divElement.style.display = "block";
-    done();
+
+    // set the header text to the div name
+    document.getElementById("nav-header").innerHTML = divElement.getAttribute("name").toUpperCase();
+
+    // set menu button to a back arrow and change ref when not home screen
+    let menuButton = document.getElementById("nav-button");
+    let menuButtonIcon = document.getElementById("nav-button-icon");
+    if (divID == "map-div") {
+        // open the menu as normal
+        menuButton.setAttribute("onclick", "w3_open()");
+        menuButtonIcon.setAttribute("class", "fa fa-bars");
+    } else {
+        // show a back button and point onclick to show home screen
+        menuButton.setAttribute("onclick", "showDiv('map-div')");
+        menuButtonIcon.setAttribute("class", "fa fa-chevron-left");
+    }
+
+    // if a function was passed as a param, execute now
+    if (typeof done === 'function') done();
 }
 
 // Load the script required for google maps API
