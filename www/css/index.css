@@ -22,9 +22,25 @@ body {
     color: #2196F3 !important
 }
 
-.app-section {
-    top: 7vh;
-    height: 93vh;
+.app-div {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    top: 39px;
+    height: calc(100vh - 39px);
+    width: 100vw;
+    z-index: 0;
+}
+
+.app-section,
+#app-splash {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100vh;
+    width: 100vw;
+    transition: opacity .4s ease-out;
+    z-index: 0;
 }
 
 .side-nav-icon {
@@ -50,18 +66,27 @@ body {
     margin: 5px 0px;
 }
 
+#app-splash {
+    z-index: 1;
+}
+
+#map-div {
+    z-index: 1;
+}
+
 #invite-form label {
     font-weight: 600;
 }
 
 #nav-bar {
-    height: 7vh;
+    /* height: 7vh; */
     display: block;
 }
 
 #nav-header {
-    padding: 8px 0px;
-    width: 260px;
+    margin-left: 52px;
+    width: calc(100vw - 104px);
+    /* height: 6.6vh; */
 }
 
 #nav-button {
