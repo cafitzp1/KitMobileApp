@@ -20,7 +20,7 @@ const load = true;
     // hide splash after 3s
     if (load) hideSplash(3000);
 
-    // if (test) document.getElementById('manage-group-side-nav-button').click();
+    if (test) document.getElementById('alert-group-side-nav-button').click();
 }
 
 // App entry point
@@ -47,12 +47,12 @@ function hideSplash(time) {
 // Open sidebar and toggle overlay when clicking the menu icon
 function w3_open() {
     document.getElementById("side-nav").style.display = "block";
-    document.getElementById("nav-overlay").style.display = "block";
+    document.getElementById("overlay-div").style.display = "block";
 }
 
 function w3_close() {
     document.getElementById("side-nav").style.display = "none";
-    document.getElementById("nav-overlay").style.display = "none";
+    document.getElementById("overlay-div").style.display = "none";
 }
 
 // Show/hide app sections (splash screen, login, and main)
@@ -87,7 +87,7 @@ function showDiv(divID, callback) {
         div.style.display = "none";
     }
 
-    // show the div passed as an arg, hide the side nav
+    // show the div passed as an arg
     divElement.style.display = "block";
 
     // set the header text to the div name
@@ -108,6 +108,31 @@ function showDiv(divID, callback) {
 
     // if a function was passed as a param, execute now
     if (typeof callback === 'function') callback();
+}
+
+function showContextDiv(divID, callback) {
+    let divElement = document.getElementById(divID);
+    let overlay = document.getElementById("overlay-div");
+    let mapDiv = document.getElementById("map-div");
+
+    // if a function was passed as a param, execute now
+    if (typeof callback === 'function') callback();
+
+    // show the div passed as an arg
+    divElement.style.display = "block";
+
+    // toggle overlay
+    overlay.style.display = "block";
+
+    // disable map-div
+    mapDiv.setAttribute("disabled");
+}
+
+function hideContextDiv(divID) {
+    let contextDiv = document.getElementById(divID);
+    let overlay = document.getElementById("overlay-div");
+
+    contextDiv.style.display = overlay.style.display = "none";
 }
 
 // Load the script required for google maps API

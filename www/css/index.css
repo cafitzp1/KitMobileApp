@@ -70,8 +70,19 @@ body {
     z-index: 1;
 }
 
+#side-nav {
+    display:none;
+    z-index:4;
+    width: 75vw;
+    opacity: .8;
+}
+
 #map-div {
     z-index: 1;
+}
+
+#alert-group-div {
+    z-index: 4;
 }
 
 #invite-form label {
@@ -105,4 +116,19 @@ body {
 #manage-group-user-div .username-text {
     font-weight: 600;
     font-size: 18px;
+}
+
+#alert-group-context-menu {
+    top: 45%;
+    width: 80vw;
+    opacity: .9;
+}
+
+#alert-group-context-menu hr {
+    margin: 0;
+}
+
+#alert-group-context-menu a {
+    margin: 4px 0px;
+    color: #3399FF;
 }
