@@ -22,6 +22,11 @@ body {
     color: #2196F3 !important
 }
 
+.button-secondary:visited,
+.button-secondary:hover {
+    color: black !important
+}
+
 .app-div {
     position: absolute;
     top: 0px;
@@ -53,22 +58,57 @@ body {
     top: 50px;
 }
 
-.user-icon {
+.user-icon,
+.settings-user-icon {
     height: 50px;
     width: 50px;
     color: white;
     background-color: rgb(30, 234, 165);
 }
 
-.user-icon-text {
+.settings-user-icon {
+    height: 125px;
+    width: 125px;
+}
+
+.user-icon-text,
+.settings-user-icon-text {
     font-weight: 500;
     font-size: 24px;
     margin: 5px 0px;
 }
 
+.settings-user-icon-text {
+    margin: 12.5px 0px;
+    font-size: 60px;
+}
+
 .login-form-inputs {
     margin-top: 55vh;
     padding: 0px 10px;
+}
+
+.flat-input {
+    box-shadow: none;
+    border-top: transparent !important;
+    border-left: transparent !important;
+    border-right: transparent !important;
+    border-bottom: transparent !important;
+}
+
+.context-menu {
+    top: 45%;
+    width: 80vw;
+    opacity: .85;
+}
+
+.context-menu hr {
+    margin: 0;
+}
+
+.context-menu a {
+    margin: 4px 0px;
+    color: #3399FF;
 }
 
 @media (max-width: 768px) {
@@ -96,7 +136,8 @@ body {
     z-index: 1;
 }
 
-#alert-group-div {
+#alert-group-div,
+#remove-user-div {
     z-index: 4;
 }
 
@@ -119,8 +160,9 @@ body {
     padding-top: 4px;
 }
 
-#manage-group-user-div {
-    padding: 20px 8px 0px 8px;
+#manage-group-user-div,
+.account-settings {
+    padding: 0px 15px 0px 15px;
 }
 
 #manage-group-user-div .username-text,
@@ -131,21 +173,6 @@ body {
 #manage-group-user-div .username-text {
     font-weight: 600;
     font-size: 18px;
-}
-
-#alert-group-context-menu {
-    top: 45%;
-    width: 80vw;
-    opacity: .85;
-}
-
-#alert-group-context-menu hr {
-    margin: 0;
-}
-
-#alert-group-context-menu a {
-    margin: 4px 0px;
-    color: #3399FF;
 }
 
 #login-form input {
@@ -164,4 +191,21 @@ body {
 #login-form-image.move {
     transition: margin-top 0.25s ease;
     margin-top: 33vh !important;
+}
+
+#account-settings-div label {
+    font-weight: 600;
+}
+
+#account-settings-div button {
+    margin-bottom: 16px;
+}
+
+#account-settings-data-div {
+    margin: 16px -16px 16px -16px
+}
+
+#account-settings-button-div,
+#manage-group-button-div {
+    margin: 32px 16px 32px 16px
 }

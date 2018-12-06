@@ -76,25 +76,63 @@
 
       <!-- Account settings div -->
       <div id="account-settings-div" name="account settings" class="w3-display-container app-div">
-        <h3 class="w3-center w3-padding-32 w3-opacity">ACCOUNT SETTINGS</h3>
+        <form class="w3-container account-settings">
+          <!-- icon -->
+          <div class="w3-cell-row w3-center w3-padding-16 w3-margin-top">
+            <span class="w3-badge w3-border w3-border-gray w3-center settings-user-icon">
+              <p class="settings-user-icon-text">JS</p>
+            </span>
+          </div>
+          <!-- data -->
+          <div id="account-settings-data-div">
+            <div class="w3-bar w3-white w3-border">
+              <label class="w3-bar-item w3-left">NAME</label>
+              <input class="w3-bar-item w3-input w3-border w3-right w3-right-align flat-input" type="text" value="John Smith">
+            </div>
+            <div class="w3-bar w3-white w3-border-bottom">
+              <label class="w3-bar-item w3-left">USERNAME</label>
+              <input class="w3-bar-item w3-input w3-border w3-right w3-right-align flat-input" type="text" value="jsmith">
+            </div>
+            <div class="w3-bar w3-white w3-border-bottom">
+              <label class="w3-bar-item w3-left">EMAIL</label>
+              <input class="w3-bar-item w3-input w3-border w3-right w3-right-align flat-input" type="text" value="jsmith@gmail.com">
+            </div>
+            <div class="w3-bar w3-white w3-border-bottom">
+              <label class="w3-bar-item w3-left">PASSWORD</label>
+              <input class="w3-bar-item w3-input w3-border w3-right w3-right-align flat-input" type="password" value="password">
+            </div>
+          </div>
+          <!-- buttons -->
+          <div id="account-settings-button-div" class="w3-container">
+            <button id="save-button" class="w3-button w3-white w3-text-blue w3-border w3-border-blue w3-round w3-block no-click-effect button-primary">Save</button>
+            <button id="logout-button" class="w3-button w3-white w3-text-black w3-border w3-border-black w3-round w3-block no-click-effect button-secondary">Log
+              Out</button>
+          </div>
+        </form>
       </div>
 
       <!-- Manage group div -->
       <div id="manage-group-div" name="manage group" class="w3-display-container app-div">
-        <div id="manage-group-user-div" class="w3-container">
-          <!-- user icon -->
-          <div class="w3-container w3-cell w3-cell-middle">
-            <span class="w3-badge w3-border w3-center user-icon">
-              <p class="user-icon-text">JS</p>
-            </span>
+        <br>
+        <!-- user section -->
+        <div id="manage-group-users-div">
+          <!-- first user -->
+          <div id="manage-group-user-div" class="w3-container" onclick="showContextDiv('remove-user-div')">
+            <!-- user icon -->
+            <div class="w3-container w3-cell w3-cell-middle">
+              <span class="w3-badge w3-border w3-center user-icon">
+                <p class="user-icon-text">JS</p>
+              </span>
+            </div>
+            <!-- user name and email -->
+            <div class="w3-container w3-cell">
+              <p class="username-text">John Smith</p>
+              <p class="user-email-text">jmsith@gmail.com</p>
+            </div>
+            <hr>
           </div>
-          <!-- user name and email -->
-          <div class="w3-container w3-cell">
-            <p class="username-text">John Smith</p>
-            <p class="user-email-text">jmsith@gmail.com</p>
-          </div>
-          <hr style="margin-bottom: 10px;">
         </div>
+        <!-- invite section -->
         <div id="manage-group-invite-div" class="w3-container">
           <div class="w3-padding-small">
             <p style="margin-top: 0px;">INVITE MORE MEMBERS</p>
@@ -104,15 +142,30 @@
             <input class="w3-input" type="text">
             <label>NAME</label>
             <input class="w3-input" type="text">
-            <br>
-            <button id="invite-button" class="w3-button w3-white w3-text-blue w3-border w3-border-blue w3-round w3-right no-click-effect button-primary">Invite</button>
+            <div id="manage-group-button-div" class="w3-container">
+              <button id="invite-button" class="w3-button w3-white w3-text-blue w3-border w3-border-blue w3-round w3-block no-click-effect button-primary">Invite</button>
+            </div>
           </form>
+        </div>
+      </div>
+
+      <!-- Remove user div -->
+      <div id="remove-user-div" name="alert group" class="w3-display-container app-div">
+        <div id="manage-group-context-menu" class="w3-panel w3-round-xlarge w3-white w3-display-middle w3-center context-menu">
+          <p id="manage-group-context-title"><b>Test User</b></p>
+          <p id="manage-group-context-subtitle">Remove Test User from the group?</p>
+          <hr>
+          <a href="#home" id="alert-cancel-button" onclick="hideContextDiv('remove-user-div')" class="w3-bar-item w3-button no-click-effect">
+            REMOVE</a>
+          <hr>
+          <a href="#home" id="alert-cancel-button" onclick="hideContextDiv('remove-user-div')" class="w3-bar-item w3-button no-click-effect">
+            <b>CANCEL</b></a>
         </div>
       </div>
 
       <!-- Alert group div -->
       <div id="alert-group-div" name="alert group" class="w3-display-container app-div">
-        <div id="alert-group-context-menu" class="w3-panel w3-round-xlarge w3-white w3-display-middle w3-center">
+        <div id="alert-group-context-menu" class="w3-panel w3-round-xlarge w3-white w3-display-middle w3-center context-menu">
           <p><b>ALERT GROUP</b></p>
           <p class="">Immediately notify the rest of the members in your group.</p>
           <hr>
