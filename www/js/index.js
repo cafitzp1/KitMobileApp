@@ -4,10 +4,11 @@
 
 "use strict";
 
-const test = true;
-const loadTime = 3000;
-const testLoadTime = 700;
-const splashTransition = 500;
+const test = false;                 // set to true for testing, false for production
+const loadTime = 3000;              // load time when test is set to false
+const testLoadTime = 700;           // load time when test is set to true
+const splashTransition = 500;       // time for the splash screen transition to login
+const testDiv = 'manage-group';     // if test is set to true, this div will immediately open
 
 // immeditately invoked function expression
 {
@@ -21,7 +22,10 @@ const splashTransition = 500;
     // hide splash after 3s
     if (loadTime) hideSplash(loadTime, initializeLogin);
 
-    // if (test) document.getElementById('alert-group-side-nav-button').click();
+    if (test) {
+        document.getElementById("login-button").click();
+        document.getElementById(`${testDiv}-side-nav-button`).click();
+    }
 }
 
 function initializeHomePage() {
@@ -144,7 +148,6 @@ function showDiv(divID, callback) {
 function showContextDiv(divID, callback) {
     let divElement = document.getElementById(divID);
     let overlay = document.getElementById("overlay-div");
-    let mapDiv = document.getElementById("map-div");
 
     // if a function was passed as a param, execute now
     if (typeof callback === 'function') callback();
@@ -155,8 +158,7 @@ function showContextDiv(divID, callback) {
     // toggle overlay
     overlay.style.display = "block";
 
-    // disable map-div
-    mapDiv.setAttribute("disabled");
+    console.log('clicked');
 }
 
 function hideContextDiv(divID) {
