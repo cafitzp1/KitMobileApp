@@ -66,6 +66,21 @@ body {
     margin: 5px 0px;
 }
 
+.login-form-inputs {
+    margin-top: 55vh;
+    padding: 0px 10px;
+}
+
+@media (max-width: 768px) {
+    .media-large  {padding: 0 10px; }
+}
+@media (max-width: 1024px) and (min-width: 769px) {
+    .media-large  {padding: 0px 100px;}
+}
+@media (min-width: 1025px) {
+    .media-large  {padding: 0px 275px;}
+}
+
 #app-splash {
     z-index: 1;
 }
@@ -131,4 +146,22 @@ body {
 #alert-group-context-menu a {
     margin: 4px 0px;
     color: #3399FF;
+}
+
+#login-form input {
+    margin: 10px 0px;
+    opacity: 0;
+    transition: opacity .4s ease-out;
+}
+
+#login-form-image {
+    position: absolute;
+    margin-top: 50vh;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#login-form-image.move {
+    transition: margin-top 0.25s ease;
+    margin-top: 33vh !important;
 }
