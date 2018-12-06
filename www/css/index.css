@@ -66,6 +66,21 @@ body {
     margin: 5px 0px;
 }
 
+.login-form-inputs {
+    margin-top: 55vh;
+    padding: 0px 10px;
+}
+
+@media (max-width: 768px) {
+    .media-large  {padding: 0 10px; }
+}
+@media (max-width: 1024px) and (min-width: 769px) {
+    .media-large  {padding: 0px 100px;}
+}
+@media (min-width: 1025px) {
+    .media-large  {padding: 0px 275px;}
+}
+
 #app-splash {
     z-index: 1;
 }
@@ -137,11 +152,6 @@ body {
     margin: 10px 0px;
     opacity: 0;
     transition: opacity .4s ease-out;
-}
-
-#login-form-input-div {
-    margin-top: 55vh;
-    padding: 0px 10px;
 }
 
 #login-form-image {
