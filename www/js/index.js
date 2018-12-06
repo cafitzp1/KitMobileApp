@@ -157,8 +157,6 @@ function showContextDiv(divID, callback) {
 
     // toggle overlay
     overlay.style.display = "block";
-
-    console.log('clicked');
 }
 
 function hideContextDiv(divID) {
