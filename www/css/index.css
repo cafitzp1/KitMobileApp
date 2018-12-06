@@ -132,3 +132,26 @@ body {
     margin: 4px 0px;
     color: #3399FF;
 }
+
+#login-form input {
+    margin: 10px 0px;
+    opacity: 0;
+    transition: opacity .4s ease-out;
+}
+
+#login-form-input-div {
+    margin-top: 55vh;
+    padding: 0px 10px;
+}
+
+#login-form-image {
+    position: absolute;
+    margin-top: 50vh;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#login-form-image.move {
+    transition: margin-top 0.25s ease;
+    margin-top: 33vh !important;
+}

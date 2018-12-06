@@ -5,7 +5,9 @@
 "use strict";
 
 const test = true;
-const load = true;
+const loadTime = 3000;
+const testLoadTime = 700;
+const splashTransition = 500;
 
 // immeditately invoked function expression
 {
@@ -13,14 +15,18 @@ const load = true;
     window.addEventListener("load", onDeviceReady);
     document.addEventListener("deviceready", onDeviceReady, false);
 
-    // start with the app-main section and map-div showing
-    showSection("app-main");
-    document.getElementById('nav-header').click();
+    // start with the login section
+    showSection("app-login");
 
     // hide splash after 3s
-    if (load) hideSplash(3000);
+    if (loadTime) hideSplash(loadTime, initializeLogin);
 
     // if (test) document.getElementById('alert-group-side-nav-button').click();
+}
+
+function initializeHomePage() {
+    showSection("app-main");
+    document.getElementById('nav-header').click();
 }
 
 // App entry point
@@ -29,10 +35,9 @@ function onDeviceReady() {
 	loadScript('initMap');
 }
 
-function hideSplash(time) {
-    if (test) time = 1000;
+function hideSplash(time, callback) {
+    if (test) time = testLoadTime;
 
-    let transition = 400;
     let splash = document.getElementById("app-splash");
 
     // changing opacity will show the transition
@@ -40,8 +45,34 @@ function hideSplash(time) {
         splash.style.opacity = "0";
         
         // we also have to display none so we can interact with div underneath
-        setTimeout(() => splash.style.display = "none", transition);
+        setTimeout(() => {
+            splash.style.display = "none";
+
+            // any function to be executed after splash is gone should be done now
+            if (typeof callback === 'function') callback();
+         }, splashTransition);
     }, time);
+}
+
+function initializeLogin() {
+    let form = document.getElementById("login-form");
+    let image = document.getElementById("login-form-image");
+    let formInputs = document.getElementsByClassName("login-form-input");
+
+    // animate logo movement
+    setTimeout(() => {
+        image.className += " move";
+
+        // animate input appearance
+        setTimeout(() => {
+            for (let input of formInputs) {
+                input.style.opacity = "1";
+            }
+
+            // any function to be executed after splash is gone should be done now
+            if (typeof callback === 'function') callback();
+        }, 100);
+    }, 250);
 }
 
 // Open sidebar and toggle overlay when clicking the menu icon

@@ -26,8 +26,16 @@
       <img src="./assets/kit-logo.png" alt="kit app logo" class="w3-display-middle">
     </div>
   </section>
-  <section id="app-login" class="app-section" style="display: none;">
-
+  <section id="app-login" class="app-section w3-display-container" style="display: none;">
+    <form id="login-form" class="w3-container">
+      <img id="login-form-image" src="./assets/kit-logo.png" alt="kit app logo">
+      <div id="login-form-input-div">
+        <input class="w3-input w3-border login-form-input" type="text" placeholder="username">
+        <input class="w3-input w3-border login-form-input" type="text" placeholder="password">
+        <input id="login-button" class="w3-input w3-white login-form-input w3-text-blue w3-border w3-border-blue" type="button"
+          value="Login" onclick="initializeHomePage()">
+      </div>
+    </form>
   </section>
   <section id="app-main" class="app-section" style="display: none;">
     <!-- Navbar -->
