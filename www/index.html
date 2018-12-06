@@ -30,10 +30,14 @@
     <form id="login-form" class="w3-container">
       <img id="login-form-image" src="./assets/kit-logo.png" alt="kit app logo">
       <div id="login-form-input-div" class="login-form-inputs media-large ">
-        <input class="w3-input w3-border login-form-input" type="text" placeholder="username">
-        <input class="w3-input w3-border login-form-input" type="text" placeholder="password">
-        <input id="login-button" class="w3-input w3-white login-form-input w3-text-blue w3-border w3-border-blue" type="button"
-          value="Login" onclick="initializeHomePage()">
+        <input class="w3-input w3-border login-form-input w3-round" type="text" placeholder="username">
+        <input class="w3-input w3-border login-form-input w3-round" type="text" placeholder="password">
+        <div class="`w3-bar w3-block">
+          <button class="w3-left w3-bar-item w3-button w3-white w3-border w3-border-blue w3-text-blue w3-round login-form-input button-rev" style="width:48.5%" onclick="initializeHomePage()">
+            Log in</button>
+          <button class="w3-right w3-bar-item w3-button w3-blue w3-round login-form-input button-primary" style="width:48.5%" onclick="initializeHomePage()">
+            Sign up</button>
+        </div>
       </div>
     </form>
   </section>

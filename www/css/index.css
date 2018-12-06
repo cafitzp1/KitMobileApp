@@ -22,9 +22,19 @@ body {
     color: #2196F3 !important
 }
 
+.button-rev:visited,
+.button-rev:hover {
+    color: white !important
+}
+
 .button-secondary:visited,
 .button-secondary:hover {
     color: black !important
+}
+
+.button-tertiary:visited,
+.button-tertiary:hover {
+    color: #9e9e9e !important
 }
 
 .app-div {
@@ -175,10 +185,11 @@ body {
     font-size: 18px;
 }
 
-#login-form input {
+#login-form input,
+#login-form button {
     margin: 10px 0px;
     opacity: 0;
-    transition: opacity .4s ease-out;
+    transition: opacity .4s ease-in;
 }
 
 #login-form-image {

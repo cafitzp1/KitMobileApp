@@ -5,7 +5,7 @@
 "use strict";
 
 const test = false;                 // set to true for testing, false for production
-const loadTime = 3000;              // load time when test is set to false
+const loadTime = 1000;              // load time when test is set to false
 const testLoadTime = 700;           // load time when test is set to true
 const splashTransition = 500;       // time for the splash screen transition to login
 const testDiv = 'manage-group';     // if test is set to true, this div will immediately open
