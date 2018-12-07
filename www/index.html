@@ -16,7 +16,8 @@
 				style-src 'self' 'unsafe-inline'; 
 				script-src  'self' 'unsafe-inline' 'unsafe-eval' 
 					https://*.phonegap.com ;
-				media-src *" /> -->
+        media-src *" /> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
@@ -27,19 +28,21 @@
     </div>
   </section>
   <section id="app-login" class="app-section w3-display-container" style="display: none;">
-    <form id="login-form" class="w3-container">
-      <img id="login-form-image" src="./assets/kit-logo.png" alt="kit app logo">
-      <div id="login-form-input-div" class="login-form-inputs media-large ">
-        <input class="w3-input w3-border login-form-input w3-round" type="text" placeholder="username">
-        <input class="w3-input w3-border login-form-input w3-round" type="text" placeholder="password">
-        <div class="`w3-bar w3-block">
-          <button class="w3-left w3-bar-item w3-button w3-white w3-border w3-border-blue w3-text-blue w3-round login-form-input button-rev" style="width:48.5%" onclick="initializeHomePage()">
-            Log in</button>
-          <button class="w3-right w3-bar-item w3-button w3-blue w3-round login-form-input button-primary" style="width:48.5%" onclick="initializeHomePage()">
-            Sign up</button>
+    <div id="app-login-div">
+      <form id="login-form" class="w3-container">
+        <img id="login-form-image" src="./assets/kit-logo.png" alt="kit app logo">
+        <div id="login-form-input-div" class="login-form-inputs media-large ">
+          <input id="login-username-input" class="w3-input w3-border login-form-input w3-round" type="text" placeholder="username">
+          <input id="login-password-input" class="w3-input w3-border login-form-input w3-round" type="password" placeholder="password">
+          <div class="`w3-bar w3-block">
+            <a href="#home" id="login-button" class="w3-left w3-bar-item w3-button w3-white w3-border w3-border-blue w3-text-blue w3-round login-form-input no-click-effect-blue-rev" 
+            style="width:48.5%" onclick="authenticate()">Log in</a>
+            <a href="#home" id="signup-button" class="w3-right w3-bar-item w3-button w3-blue w3-round login-form-input no-click-effect-blue" style="width:48.5%" onclick="initializeHomePage()">
+              Sign up</a>
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </section>
   <section id="app-main" class="app-section" style="display: none;">
     <!-- Navbar -->
@@ -191,8 +194,9 @@
   </section>
 
   <script type="text/javascript" src="cordova.js"></script>
-  <script type="text/javascript" src="./js/index.js"></script>
   <script type="text/javascript" src="./js/appSettings.js"></script>
+  <script type="text/javascript" src="./js/util.js"></script>
+  <script type="text/javascript" src="./js/index.js"></script>
 
 </body>
 

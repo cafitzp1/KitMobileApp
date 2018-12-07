@@ -17,14 +17,23 @@ body {
     color: white !important;
 }
 
+.no-click-effect-blue:focus,
+.no-click-effect-blue:hover,
+.no-click-effect-blue:active {
+    background-color: #2196F3 !important;
+    color: white !important;
+}
+
+.no-click-effect-blue-rev:focus,
+.no-click-effect-blue-rev:hover,
+.no-click-effect-blue-rev:active {
+    background-color: white !important;
+    color: #2196F3 !important;
+}
+
 .button-primary:visited,
 .button-primary:hover {
     color: #2196F3 !important
-}
-
-.button-rev:visited,
-.button-rev:hover {
-    color: white !important
 }
 
 .button-secondary:visited,
@@ -131,6 +140,22 @@ body {
     .media-large  {padding: 0px 275px;}
 }
 
+/* login image does not look too well when small vertical height */
+@media (max-height: 489px) {
+    #login-form-image  {display: none;}
+}
+@media (min-height: 490px) {
+    #login-form-image  {display: block;}
+}
+
+@media (max-height: 489px) {
+    #login-form-input-div  {margin-top: 17vh;}
+}
+@media (min-height: 490px) {
+    #login-form-input-div  {margin-top: 55vh;}
+}
+
+
 #app-splash {
     z-index: 1;
 }
@@ -163,6 +188,7 @@ body {
 #nav-header {
     margin-left: 52px;
     width: calc(100vw - 104px);
+    padding: 8px 0px;
     /* height: 6.6vh; */
 }
 
@@ -185,8 +211,13 @@ body {
     font-size: 18px;
 }
 
+#login-form {
+    min-height: 100%;
+    z-index: 0;
+}
+
 #login-form input,
-#login-form button {
+#login-form a {
     margin: 10px 0px;
     opacity: 0;
     transition: opacity .4s ease-in;
@@ -204,6 +235,10 @@ body {
     margin-top: 33vh !important;
 }
 
+#account-settings-div input {
+    max-width: 50%;
+}
+
 #account-settings-div label {
     font-weight: 600;
 }
@@ -219,4 +254,14 @@ body {
 #account-settings-button-div,
 #manage-group-button-div {
     margin: 32px 16px 32px 16px
+}
+
+#app-login-div {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    top: 0px;
+    height: 100vh;
+    width: 100vw;
+    z-index: 0;
 }

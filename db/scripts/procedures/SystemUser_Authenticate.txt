@@ -1,0 +1,9 @@
+DROP PROCEDURE IF EXISTS `db_test_cafitzp1`.`SystemUser_Authenticate`;
+DELIMITER $$
+CREATE DEFINER=`cafitzp1`@`%` PROCEDURE `SystemUser_Authenticate`(IN user VARCHAR(40))
+BEGIN
+    SELECT  `Password`
+    FROM    `SystemUser`
+    WHERE   `Username` = user;
+END
+$$

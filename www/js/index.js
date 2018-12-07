@@ -1,14 +1,15 @@
 /* jshint browser: true */
 /* jshint jquery: true */
-/* globals google: true, appSettings: true */
+/* globals google: true, appSettings: true, xhrURL: true */
 
 "use strict";
 
-const test = false;                 // set to true for testing, false for production
-const loadTime = 1000;              // load time when test is set to false
-const testLoadTime = 700;           // load time when test is set to true
+// debug
+const test = false;                  // set to true for testing, false for production
+const loadTime = 700;              // load time when test is set to false
+const testLoadTime = 300;           // load time when test is set to true
 const splashTransition = 500;       // time for the splash screen transition to login
-const testDiv = 'manage-group';     // if test is set to true, this div will immediately open
+const testDiv = 'account-settings';     // if test is set to true, this div will immediately open
 
 // immeditately invoked function expression
 {
@@ -26,6 +27,40 @@ const testDiv = 'manage-group';     // if test is set to true, this div will imm
         document.getElementById("login-button").click();
         document.getElementById(`${testDiv}-side-nav-button`).click();
     }
+}
+
+function authenticate() {
+    let username = document.getElementById('login-username-input').value;
+    let password = document.getElementById('login-password-input').value;
+    let procedure = "SystemUser_Authenticate";
+    let data = {
+        "username": username,
+        "password": password
+    };
+
+    const xhr = new XMLHttpRequest();
+    let url = xhrURL(procedure, data);
+
+    xhr.open('GET', url, true);
+    xhr.send(null);
+    xhr.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            let json = JSON.parse(xhr.responseText);
+            if (json[0][0] !== undefined) {
+                if (password == (json[0][0].Password)) {
+                    window.alert(`Welcome ${username}!`);
+                    initializeHomePage();
+                } else {
+                    window.alert("Incorrect credentials");
+                }
+            } else {
+                window.alert("Incorrect credentials");
+            }
+        } else if (this.readyState === 4 && this.status === 404) {
+            console.log("error");
+            window.alert("Incorrect credentials");
+        }
+    };
 }
 
 function initializeHomePage() {
@@ -58,7 +93,7 @@ function hideSplash(time, callback) {
     }, time);
 }
 
-function initializeLogin() {
+function initializeLogin(callback) {
     let form = document.getElementById("login-form");
     let image = document.getElementById("login-form-image");
     let formInputs = document.getElementsByClassName("login-form-input");
@@ -74,7 +109,9 @@ function initializeLogin() {
             }
 
             // any function to be executed after splash is gone should be done now
-            if (typeof callback === 'function') callback();
+            if (typeof callback === 'function') {
+                callback();
+            }
         }, 100);
     }, 250);
 }
