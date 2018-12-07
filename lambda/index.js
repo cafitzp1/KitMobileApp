@@ -182,6 +182,39 @@ const systemUser_Get = (event, callback) => {
     console.log(4.5);
 };
 
+const systemUser_GetGroup = (event, callback) => {
+    console.log(5);
+
+    let proc = event.queryStringParameters.procedure,
+        currentGroupID = event.queryStringParameters.currentGroupID;
+
+    console.log('currentGroupID param: ' + currentGroupID);
+
+    let sql = `CALL ${proc}(?)`;
+    let conn = dbHelp.dbConnection(5000);
+
+    conn.connect();
+    conn.query(sql, currentGroupID, (error, results) => {
+        if (error) {
+            console.log('fail:');
+            callback(null, getResponse(404, error));
+        } else {
+            console.log('success:');
+            conn.end((err) => {
+                if (err) {
+                    console.log('fail:');
+                    callback(null, getResponse(404, error));
+                } else {
+                    console.log(results);
+                    callback(null, getResponse(200, results));
+                }
+            });
+        }
+    });
+
+    console.log(5.5);
+};
+
 const invalidQueryParameters = () => {
     console.log(10);
 

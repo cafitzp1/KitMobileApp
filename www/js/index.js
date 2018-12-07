@@ -11,6 +11,9 @@ const testLoadTime = 300;               // load time when test is set to true
 const splashTransition = 500;           // time for the splash screen transition to login
 const testDiv = 'account-settings';     // if test is set to true, this div will immediately open
 
+// app
+let polling = false;
+
 // immeditately invoked function expression
 {
     // wait until all phonegap/cordova is loaded then fire start up events
@@ -217,26 +220,39 @@ function initializeHomePage() {
     document.getElementById('nav-header').click();
 
     // one time read from db
-    initializeUserSettings();
-
-    // will keep polling db
-    pollUserUpdates();
+    initializeUserSettings()
+        .then((res) => {
+            // keep polling db
+            pollUserUpdates();
+            polling = true;
+        })
+        .catch((err) => {
+            console.log(`error with home page initialization, ${err}`);
+        });
 }
 
 function initializeUserSettings() {
-    let user, userInfo;
-
-    getUser()
-        .then((res) => {
-            console.log('2');
-            return getUserInfo(res);
-        })
-        .then((res) => {
-            console.log('3');
-            applyUserSettings(res);
-        })
-        .catch((err) => {
-            console.log("error with user settings initialization; " + err);
+    return new Promise(function (resolve, reject) {
+        console.log('p1-2');
+        getUser()
+            .then((res) => {
+                console.log('p1-2');
+                return getUserInfo(res);
+            })
+            .then((res) => {
+                console.log('p1-3');
+                applyUserSettings(res);
+            })
+            .then((res) => {
+                console.log('p1-3');
+                resolve(console.log("user settings initialization complete"));
+            })
+            .catch((err) => {
+                reject({
+                    status: 404,
+                    statusText: `error with user settings initialization, ${err}`
+                });
+            });
         });
 }
 
@@ -331,14 +347,134 @@ function applyUserSettings(user) {
     document.getElementById("manage-group-user-email-0").innerHTML = user.Email;
 }
 
+function beginUserUpdatePoll() {
+    polling = true;
+}
+
 function pollUserUpdates() {
-    //...
+    console.log('p2-1');
+    let user;
+
+    getUser()
+        .then((res) => {
+            console.log('p2-2');
+            return getUserInfo(res);
+        })
+        .then((res) => {
+            console.log('p2-3');
+            user = res;
+            if (res.CurrentGroupID > 0) { // need to look for members
+                return getGroupMembers(res.CurrentGroupID);
+            }
+        })
+        .then((res) => {
+            if (res.length > 0) { // need to look for members
+                addGroupMembers(res, user);
+            }
+        })
+        .catch((err) => {
+            console.log("error with user polling; " + err);
+        });
+}
+
+function getGroupMembers(groupID) {
+    return new Promise(function (resolve, reject) {
+        let procedure = "SystemUser_GetGroup";
+        let data = {
+            "currentGroupID": groupID,
+        };
+
+        const xhr = new XMLHttpRequest();
+        let url = xhrURL(procedure, data);
+
+        xhr.open('GET', url, true);
+        xhr.send(null);
+        xhr.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                console.log("200");
+                let json = JSON.parse(xhr.responseText);
+                if (json[0] !== undefined) {
+                    console.log(json[0]);
+                    resolve(json[0]);
+                } else {
+                    reject({
+                        status: 404,
+                        statusText: "user id not found in db"
+                    });
+                }
+            } else if (this.readyState === 4 && this.status === 404) {
+                reject({
+                    status: 404,
+                    statusText: "unknown error occurred during user group lookup"
+                });
+            }
+        };
+    });
+}
+
+function addGroupMembers(records, mainUser) {
+    console.log(`adding ${records.length} group members`);
+
+    let element = document.getElementById("manage-group-users-div");
+
+    // just reset the group members section for each poll update
+    element.innerHTML = "";
+
+    // add our main user back
+    element.innerHTML += setUserDivInfo(mainUser, 0);
+    styleUserDiv(mainUser, 0);
+
+    for (let i = 0; i < records.length; i++) {
+        if (records[i].SystemUserID == mainUser.SystemUserID) {
+            continue;
+        } else {
+            element.innerHTML += setUserDivInfo(records[i], i+1);
+            styleUserDiv(records[i], i + 1);
+        }
+    }
+}
+
+function setUserDivInfo(user, index) {
+    let color = hashToColor(user.SystemUserID);
+    let nameAbbrv = firstTwoLettersOfName(user.Name);
+
+    let html =
+    `
+        <div id="manage-group-user-div" class="w3-container" onclick="showContextDiv('remove-user-div')">
+        <div class="w3-container w3-cell w3-cell-middle">
+            <span id="manage-group-user-icon-${index}" class="w3-badge w3-border w3-center user-icon">
+            <p id="manage-group-user-icon-text-${index}" class="user-icon-text"></p>
+            </span>
+        </div>
+        <div class="w3-container w3-cell w3-cell-middle">
+            <p id="manage-group-user-name-${index}" class="username-text"></p>
+            <p id="manage-group-user-email-${index}" class="user-email-text"></p>
+        </div>
+        <hr>
+        </div>
+    `;
+
+    return html;
+}
+
+function styleUserDiv(user, index) {
+    let color = hashToColor(user.SystemUserID);
+    let nameAbbrv = firstTwoLettersOfName(user.Name);
+
+    document.getElementById(`manage-group-user-icon-${index}`).style.backgroundColor = color;
+    document.getElementById(`manage-group-user-icon-text-${index}`).innerHTML = nameAbbrv;
+    document.getElementById(`manage-group-user-name-${index}`).innerHTML = user.Name;
+    document.getElementById(`manage-group-user-email-${index}`).innerHTML = user.Email;
 }
 
 // App entry point
-function onDeviceReady() {
+function onDeviceReady(polling = false) {
     // StatusBar.overlaysWebView(false);
     loadScript('initMap');
+
+    if (polling) {
+        setInterval(pollUserUpdates(), 4000);
+    }
 }
 
 function hideSplash(time, callback) {
