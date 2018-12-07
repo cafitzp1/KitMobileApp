@@ -79,8 +79,8 @@ body {
 
 .user-icon,
 .settings-user-icon {
-    height: 50px;
-    width: 50px;
+    height: 60px;
+    width: 60px;
     color: white;
     background-color: rgb(30, 234, 165);
 }
@@ -94,11 +94,11 @@ body {
 .settings-user-icon-text {
     font-weight: 500;
     font-size: 24px;
-    margin: 5px 0px;
+    margin: 10px 0px;
 }
 
 .settings-user-icon-text {
-    margin: 12.5px 0px;
+    margin: 15.5px 0px;
     font-size: 60px;
 }
 
@@ -131,28 +131,46 @@ body {
 }
 
 @media (max-width: 768px) {
-    .media-large  {padding: 0 10px; }
+    .media-large {
+        padding: 0 10px;
+    }
 }
+
 @media (max-width: 1024px) and (min-width: 769px) {
-    .media-large  {padding: 0px 100px;}
+    .media-large {
+        padding: 0px 100px;
+    }
 }
+
 @media (min-width: 1025px) {
-    .media-large  {padding: 0px 275px;}
+    .media-large {
+        padding: 0px 275px;
+    }
 }
 
 /* login image does not look too well when small vertical height */
 @media (max-height: 489px) {
-    #login-form-image  {display: none;}
+    #login-form-image {
+        display: none;
+    }
 }
+
 @media (min-height: 490px) {
-    #login-form-image  {display: block;}
+    #login-form-image {
+        display: block;
+    }
 }
 
 @media (max-height: 489px) {
-    #login-form-input-div  {margin-top: 17vh;}
+    #login-form-input-div {
+        margin-top: 17vh;
+    }
 }
+
 @media (min-height: 490px) {
-    #login-form-input-div  {margin-top: 55vh;}
+    #login-form-input-div {
+        margin-top: 55vh;
+    }
 }
 
 
@@ -161,8 +179,8 @@ body {
 }
 
 #side-nav {
-    display:none;
-    z-index:4;
+    display: none;
+    z-index: 4;
     width: 75vw;
     /* opacity: .8; */
 }

@@ -1,0 +1,9 @@
+DROP PROCEDURE IF EXISTS `db_test_cafitzp1`.`Session_Get`;
+DELIMITER $$
+CREATE DEFINER=`cafitzp1`@`%` PROCEDURE `Session_Get`(IN `tid` VARCHAR(255))
+BEGIN
+    SELECT      * 
+    FROM        `Session`
+    WHERE       `Token` = tid;
+END
+$$

@@ -33,11 +33,13 @@
         <img id="login-form-image" src="./assets/kit-logo.png" alt="kit app logo">
         <div id="login-form-input-div" class="login-form-inputs media-large ">
           <input id="login-username-input" class="w3-input w3-border login-form-input w3-round" type="text" placeholder="username">
-          <input id="login-password-input" class="w3-input w3-border login-form-input w3-round" type="password" placeholder="password">
+          <input id="login-password-input" class="w3-input w3-border login-form-input w3-round" type="password"
+            placeholder="password">
           <div class="`w3-bar w3-block">
-            <a href="#home" id="login-button" class="w3-left w3-bar-item w3-button w3-white w3-border w3-border-blue w3-text-blue w3-round login-form-input no-click-effect-blue-rev" 
-            style="width:48.5%" onclick="authenticate()">Log in</a>
-            <a href="#home" id="signup-button" class="w3-right w3-bar-item w3-button w3-blue w3-round login-form-input no-click-effect-blue" style="width:48.5%" onclick="initializeHomePage()">
+            <a href="#home" id="login-button" class="w3-left w3-bar-item w3-button w3-white w3-border w3-border-blue w3-text-blue w3-round login-form-input no-click-effect-blue-rev"
+              style="width:48.5%" onclick="authenticate()">Log in</a>
+            <a href="#home" id="signup-button" class="w3-right w3-bar-item w3-button w3-blue w3-round login-form-input no-click-effect-blue"
+              style="width:48.5%" onclick="initializeHomePage()">
               Sign up</a>
           </div>
         </div>
@@ -86,34 +88,38 @@
         <form class="w3-container account-settings">
           <!-- icon -->
           <div class="w3-cell-row w3-center w3-padding-16 w3-margin-top">
-            <span class="w3-badge w3-border w3-border-gray w3-center settings-user-icon">
-              <p class="settings-user-icon-text">JS</p>
+            <span id="account-settings-user-icon" class="w3-badge w3-border w3-border-gray w3-center settings-user-icon">
+              <p id="account-settings-user-icon-text" class="settings-user-icon-text">JS</p>
             </span>
           </div>
           <!-- data -->
           <div id="account-settings-data-div">
             <div class="w3-bar w3-white w3-border">
               <label class="w3-bar-item w3-left">NAME</label>
-              <input class="w3-bar-item w3-input w3-border w3-right w3-right-align flat-input" type="text" value="John Smith">
+              <input id="account-settings-name-input" class="w3-bar-item w3-input w3-border w3-right w3-right-align flat-input"
+                type="text" value="John Smith">
             </div>
             <div class="w3-bar w3-white w3-border-bottom">
               <label class="w3-bar-item w3-left">USERNAME</label>
-              <input class="w3-bar-item w3-input w3-border w3-right w3-right-align flat-input" type="text" value="jsmith">
+              <input id="account-settings-username-input" class="w3-bar-item w3-input w3-border w3-right w3-right-align flat-input"
+                type="text" value="jsmith">
             </div>
             <div class="w3-bar w3-white w3-border-bottom">
               <label class="w3-bar-item w3-left">EMAIL</label>
-              <input class="w3-bar-item w3-input w3-border w3-right w3-right-align flat-input" type="text" value="jsmith@gmail.com">
+              <input id="account-settings-email-input" class="w3-bar-item w3-input w3-border w3-right w3-right-align flat-input"
+                type="text" value="jsmith@gmail.com">
             </div>
             <div class="w3-bar w3-white w3-border-bottom">
               <label class="w3-bar-item w3-left">PASSWORD</label>
-              <input class="w3-bar-item w3-input w3-border w3-right w3-right-align flat-input" type="password" value="password">
+              <input id="account-settings-password-input" class="w3-bar-item w3-input w3-border w3-right w3-right-align flat-input"
+                type="password" value="password">
             </div>
           </div>
           <!-- buttons -->
           <div id="account-settings-button-div" class="w3-container">
             <button id="save-button" class="w3-button w3-white w3-text-blue w3-border w3-border-blue w3-round w3-block no-click-effect button-primary">Save</button>
-            <button id="logout-button" class="w3-button w3-white w3-text-black w3-border w3-border-black w3-round w3-block no-click-effect button-secondary">Log
-              Out</button>
+            <button id="logout-button" class="w3-button w3-white w3-text-black w3-border w3-border-black w3-round w3-block no-click-effect button-secondary"
+              onclick="logout()">Log out</button>
           </div>
         </form>
       </div>
@@ -127,14 +133,14 @@
           <div id="manage-group-user-div" class="w3-container" onclick="showContextDiv('remove-user-div')">
             <!-- user icon -->
             <div class="w3-container w3-cell w3-cell-middle">
-              <span class="w3-badge w3-border w3-center user-icon">
-                <p class="user-icon-text">JS</p>
+              <span id="manage-group-user-icon-0" class="w3-badge w3-border w3-center user-icon">
+                <p id="manage-group-user-icon-text-0" class="user-icon-text">JS</p>
               </span>
             </div>
             <!-- user name and email -->
-            <div class="w3-container w3-cell">
-              <p class="username-text">John Smith</p>
-              <p class="user-email-text">jmsith@gmail.com</p>
+            <div class="w3-container w3-cell w3-cell-middle">
+              <p id="manage-group-user-name-0" class="username-text">John Smith</p>
+              <p id="manage-group-user-email-0" class="user-email-text">jmsith@gmail.com</p>
             </div>
             <hr>
           </div>
