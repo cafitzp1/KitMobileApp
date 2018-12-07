@@ -45,6 +45,7 @@ function authenticate() {
     xhr.send(null);
     xhr.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
+            console.log("200");
             let json = JSON.parse(xhr.responseText);
             if (json[0][0] !== undefined) {
                 if (password == (json[0][0].Password)) {
@@ -57,7 +58,7 @@ function authenticate() {
                 window.alert("Incorrect credentials");
             }
         } else if (this.readyState === 4 && this.status === 404) {
-            console.log("error");
+            console.log("404");
             window.alert("Incorrect credentials");
         }
     };
