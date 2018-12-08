@@ -1,0 +1,9 @@
+DROP PROCEDURE IF EXISTS `db_test_cafitzp1`.`SystemUser_ChangeGroup`;
+DELIMITER $$
+CREATE DEFINER=`cafitzp1`@`%` PROCEDURE `SystemUser_ChangeGroup`(IN `systemUserID` INT, IN `currentGroupID` INT)
+BEGIN
+    UPDATE      `SystemUser`
+    SET         `CurrentGroupID` = currentGroupID
+    WHERE       `SystemUserID` = systemUserID;
+END
+$$

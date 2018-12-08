@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 const dbHelp = require('./dbHelp');
 const UIDGenerator = require('uid-generator');

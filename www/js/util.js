@@ -1,6 +1,6 @@
 /* globals google: true, appSettings: true */
 
-'use strict';
+"use strict";
 
 function xhrURL(procedure, data) {
     let procParam = encodeQueryData({
