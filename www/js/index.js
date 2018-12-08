@@ -1,18 +1,14 @@
 /* jshint browser: true */
-/* jshint jquery: true */
-/* globals google: true, appSettings: true, xhrURL: true, timeNowMySQL: true, firstTwoLettersOfName: true, hashToColor: true */
+/* globals google: true, appSettings: true, xhrURL: true, timeNowMySQL: true, firstTwoLettersOfName: true, hashToColor: true, logStatus: true */
 
 "use strict";
 
 // debug
 const test = false;                     // set to true for testing, false for production
-const loadTime = 700;                   // load time when test is set to false
+const loadTime = 1500;                  // load time when test is set to false
 const testLoadTime = 300;               // load time when test is set to true
 const splashTransition = 500;           // time for the splash screen transition to login
 const testDiv = 'account-settings';     // if test is set to true, this div will immediately open
-
-// app
-let polling = false;
 
 // immeditately invoked function expression
 {
@@ -36,9 +32,10 @@ let polling = false;
 }
 
 function initializeApp() {
-    console.log("local storage session: " + window.localStorage.getItem("sessionToken"));
+    console.log("-- local storage session: " + window.localStorage.getItem("sessionToken"));
     let session = window.localStorage.getItem("sessionToken");
 
+    // if there exists a session token in storage, we need to check if it's active
     if (session) {
         validateSession(session);
     }
@@ -49,32 +46,36 @@ function validateSession(token) {
     let data = {
         "token": token,
     };
-    console.log("validating: " + token);
+    console.log("-- validating: " + token);
 
+    // xhttp request to server
     const xhr = new XMLHttpRequest();
-    let url = xhrURL(procedure, data);
-    console.log("xhrURL: " + url);
+    let queries = xhrURL(procedure, data);
+    let url = appSettings.apigURL + 
+        '?' + 
+        queries;
 
     xhr.open('GET', url, true);
     xhr.send(null);
     xhr.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
-            console.log("200");
+            logStatus('GET', queries, this.status);
             let json = JSON.parse(xhr.responseText);
             if (json[0][0] !== undefined) {
                 let session = json[0][0].Token;
                 let active = json[0][0].Active.data[0];
-                console.log(`session token ${session} retrieved; active: ${active}`);
+                console.log(`-- session token ${session} retrieved; active: ${active}`);
                 if (active == 1) {
+                    // session is active, continue will home page initialization
                     initializeHomePage();
                 } else {
-                    console.log("session inactive");
+                    console.log("-- session inactive");
                 }
             } else {
-                console.log("session not found in db");
+                console.log("-- session not found in db");
             }
         } else if (this.readyState === 4 && this.status === 404) {
-            console.log("unknown error occurred during session validation");
+            logStatus('GET', queries, this.status);
         }
     };
 }
@@ -89,13 +90,16 @@ function authenticate() {
     };
 
     const xhr = new XMLHttpRequest();
-    let url = xhrURL(procedure, data);
+    let queries = xhrURL(procedure, data);
+    let url = appSettings.apigURL + 
+        '?' + 
+        queries;
 
     xhr.open('GET', url, true);
     xhr.send(null);
     xhr.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
-            console.log("200");
+            logStatus('GET', queries, this.status);
             let json = JSON.parse(xhr.responseText);
             if (json[0][0] !== undefined) {
                 if (password == (json[0][0].Password)) {
@@ -108,9 +112,9 @@ function authenticate() {
             } else {
                 window.alert("Incorrect credentials");
             }
-        } else if (this.readyState === 4 && this.status === 404) {
-            console.log("404");
-            window.alert("Incorrect credentials");
+        } else if (this.readyState === 4 && this.status === 403) {
+            logStatus('GET', queries, this.status);
+            window.alert("Unknown error occurred");
         }
     };
 }
@@ -124,23 +128,27 @@ function createSession(userID) {
     };
 
     const xhr = new XMLHttpRequest();
-    let url = xhrURL(procedure, data);
+    let queries = xhrURL(procedure, data);
+    let url = appSettings.apigURL + 
+        '?' + 
+        queries;
 
     xhr.open('POST', url, true);
     xhr.send(null);
     xhr.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
-            console.log("200");
+            logStatus('POST', queries, this.status);
             let json = JSON.parse(xhr.responseText);
             if (json[0][0] !== undefined) {
-                console.log(`session ${json[0][0].SessionID} created with token ${json[0][0].Token}`);
-                setLocalStorage("sessionToken", json[0][0].Token);
+                let sessionID = json[0][0].SessionID, sessionToken = json[0][0].Token;
+                console.log(`-- session ${sessionID} created with token ${sessionToken}`);
+                setLocalStorage("sessionToken", sessionToken);
                 initializeHomePage();
             } else {
                 window.alert("Unknown Error");
             }
         } else if (this.readyState === 4 && this.status === 404) {
-            console.log("404");
+            logStatus('POST', queries, this.status);
             window.alert("Unknown Error");
         }
     };
@@ -155,7 +163,7 @@ function logout() {
             location.reload(true);
         })
         .catch((err) => {
-            console.log("unknown error with logout; " + err);
+            console.log("-- unknown error with logout; " + err);
         });
 }
 
@@ -170,17 +178,20 @@ function deactivateSession() {
         };
 
         const xhr = new XMLHttpRequest();
-        let url = xhrURL(procedure, data);
+        let queries = xhrURL(procedure, data);
+        let url = appSettings.apigURL + 
+            '?' + 
+            queries;
 
         xhr.open('POST', url, true);
         xhr.send(null);
         xhr.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
-                console.log("200");
+                logStatus('POST', queries, this.status);
                 let json = JSON.parse(xhr.responseText);
                 if (json[0][0] !== undefined) {
                     resolve(() => {
-                        console.log(`session token ${json[0][0].Token} deactivated`);
+                        console.log(`-- session token ${json[0][0].Token} deactivated`);
                         window.alert(`session token ${json[0][0].Token} deactivated`);
                     });
                 } else {
@@ -190,6 +201,7 @@ function deactivateSession() {
                     });
                 }
             } else if (this.readyState === 4 && this.status === 404) {
+                logStatus('POST', queries, this.status);
                 reject({
                     status: 404,
                     statusText: "unknown error"
@@ -201,7 +213,7 @@ function deactivateSession() {
 
 function setLocalStorage(key, value) {
     while (localStorage.getItem(key) !== null) {
-        console.log(`removing key: ${localStorage.getItem(key)}`);
+        console.log(`-- removing key: ${localStorage.getItem(key)}`);
         localStorage.removeItem(key);
     }
 
@@ -210,7 +222,7 @@ function setLocalStorage(key, value) {
 
 function removeFromLocalStorage(key) {
     while (localStorage.getItem(key) !== null) {
-        console.log(`removing key: ${localStorage.getItem(key)}`);
+        console.log(`-- removing key: ${localStorage.getItem(key)}`);
         localStorage.removeItem(key);
     }
 }
@@ -219,33 +231,32 @@ function initializeHomePage() {
     showSection("app-main");
     document.getElementById('nav-header').click();
 
-    // one time read from db
+    // start with initalizing basic settings
     initializeUserSettings()
-        .then((res) => {
-            // keep polling db
+        .then(() => {
+            // invoke then keep polling db for updates
             pollUserUpdates();
-            polling = true;
+            setInterval(pollUserUpdates, 10000);
         })
         .catch((err) => {
-            console.log(`error with home page initialization, ${err}`);
+            console.log('-- error with home page initialization, ' + err);
         });
 }
 
 function initializeUserSettings() {
+    // promise for sequential execution of asychronous functions
     return new Promise(function (resolve, reject) {
-        console.log('p1-2');
         getUser()
             .then((res) => {
-                console.log('p1-2');
                 return getUserInfo(res);
             })
             .then((res) => {
-                console.log('p1-3');
                 applyUserSettings(res);
             })
             .then((res) => {
-                console.log('p1-3');
-                resolve(console.log("user settings initialization complete"));
+                resolve(() => {
+                    // console.log("-- user settings initialization complete")
+                });
             })
             .catch((err) => {
                 reject({
@@ -257,6 +268,7 @@ function initializeUserSettings() {
 }
 
 function getUser() {
+    // promise for sequential execution of asychronous functions
     return new Promise(function (resolve, reject) {
         let token = window.localStorage.getItem("sessionToken");
         let procedure = "Session_Get";
@@ -264,25 +276,32 @@ function getUser() {
             "token": token,
         };
 
+        // xml http request to server
         const xhr = new XMLHttpRequest();
-        let url = xhrURL(procedure, data);
+        let queries = xhrURL(procedure, data);
+        let url = appSettings.apigURL + 
+            '?' + 
+            queries;
 
         xhr.open('GET', url, true);
         xhr.send(null);
         xhr.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
-                console.log("200");
+                logStatus('GET', queries, this.status);
                 let json = JSON.parse(xhr.responseText);
                 if (json[0][0] !== undefined) {
-                    console.log(`found user: ${json[0][0].SystemUserID}`);
+                    // we found the user from the session
                     resolve(json[0][0].SystemUserID);
                 } else {
+                    // we could not find the user
                     reject({
                         status: 404,
                         statusText: "session not found in db"
                     });
                 }
             } else if (this.readyState === 4 && this.status === 404) {
+                // bad status code, error server side
+                logStatus('GET', queries, this.status);
                 reject({
                     status: 404,
                     statusText: "unknown error occurred during session lookup"
@@ -293,24 +312,30 @@ function getUser() {
 }
 
 function getUserInfo(systemUserID) {
+    // promise for sequential execution of asychronous functions
     return new Promise(function (resolve, reject) {
         let procedure = "SystemUser_Get";
         let data = {
             "systemUserID": systemUserID,
         };
 
+        // xml http request to server
         const xhr = new XMLHttpRequest();
-        let url = xhrURL(procedure, data);
+        let queries = xhrURL(procedure, data);
+        let url = appSettings.apigURL + 
+            '?' + 
+            queries;
 
         xhr.open('GET', url, true);
         xhr.send(null);
         xhr.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
-                console.log("200");
+                // found the user in the db
+                logStatus('GET', queries, this.status);
                 let json = JSON.parse(xhr.responseText);
                 if (json[0][0] !== undefined) {
-                    console.log(json[0][0]);
                     resolve(json[0][0]);
+                // could not find the user
                 } else {
                     reject({
                         status: 404,
@@ -318,6 +343,8 @@ function getUserInfo(systemUserID) {
                     });
                 }
             } else if (this.readyState === 4 && this.status === 404) {
+                // bad status code, server side error
+                logStatus('GET', queries, this.status);
                 reject({
                     status: 404,
                     statusText: "unknown error occurred during user lookup"
@@ -328,12 +355,8 @@ function getUserInfo(systemUserID) {
 }
 
 function applyUserSettings(user) {
-    console.log('applying user settings');
-
     let color = hashToColor(user.SystemUserID);
     let nameAbbrv = firstTwoLettersOfName(user.Name);
-    console.log("color: " + color);
-    console.log("first two letters: " + nameAbbrv);
 
     document.getElementById("account-settings-user-icon").style.backgroundColor = color;
     document.getElementById("account-settings-user-icon-text").innerHTML = nameAbbrv;
@@ -347,24 +370,22 @@ function applyUserSettings(user) {
     document.getElementById("manage-group-user-email-0").innerHTML = user.Email;
 }
 
-function beginUserUpdatePoll() {
-    polling = true;
-}
-
 function pollUserUpdates() {
-    console.log('p2-1');
+    // console.log('-- polling for updates ' + timeNowMySQL());
     let user;
 
+    // get user, user info, and members where id = current group id 
     getUser()
         .then((res) => {
-            console.log('p2-2');
             return getUserInfo(res);
         })
         .then((res) => {
-            console.log('p2-3');
             user = res;
-            if (res.CurrentGroupID > 0) { // need to look for members
+            // if current group id 0, user is not in a group
+            if (res.CurrentGroupID > 0) {
                 return getGroupMembers(res.CurrentGroupID);
+            } else {
+                throw Error('user not in a group');
             }
         })
         .then((res) => {
@@ -373,7 +394,7 @@ function pollUserUpdates() {
             }
         })
         .catch((err) => {
-            console.log("error with user polling; " + err);
+            console.log('-- ' + err);
         });
 }
 
@@ -385,16 +406,18 @@ function getGroupMembers(groupID) {
         };
 
         const xhr = new XMLHttpRequest();
-        let url = xhrURL(procedure, data);
+        let queries = xhrURL(procedure, data);
+        let url = appSettings.apigURL + 
+            '?' + 
+            queries;
 
         xhr.open('GET', url, true);
         xhr.send(null);
         xhr.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
-                console.log("200");
+                logStatus('GET', queries, this.status);
                 let json = JSON.parse(xhr.responseText);
                 if (json[0] !== undefined) {
-                    console.log(json[0]);
                     resolve(json[0]);
                 } else {
                     reject({
@@ -403,6 +426,7 @@ function getGroupMembers(groupID) {
                     });
                 }
             } else if (this.readyState === 4 && this.status === 404) {
+                logStatus('GET', queries, this.status);
                 reject({
                     status: 404,
                     statusText: "unknown error occurred during user group lookup"
@@ -413,8 +437,6 @@ function getGroupMembers(groupID) {
 }
 
 function addGroupMembers(records, mainUser) {
-    console.log(`adding ${records.length} group members`);
-
     let element = document.getElementById("manage-group-users-div");
 
     // just reset the group members section for each poll update
@@ -424,23 +446,24 @@ function addGroupMembers(records, mainUser) {
     element.innerHTML += setUserDivInfo(mainUser, 0);
     styleUserDiv(mainUser, 0);
 
+    // add each user from the query
     for (let i = 0; i < records.length; i++) {
         if (records[i].SystemUserID == mainUser.SystemUserID) {
             continue;
         } else {
-            element.innerHTML += setUserDivInfo(records[i], i+1);
+            element.innerHTML += setUserDivInfo(records[i], i + 1, "showContextDiv('remove-user-div')");
             styleUserDiv(records[i], i + 1);
         }
     }
 }
 
-function setUserDivInfo(user, index) {
+function setUserDivInfo(user, index, onclick = "") {
     let color = hashToColor(user.SystemUserID);
     let nameAbbrv = firstTwoLettersOfName(user.Name);
 
     let html =
     `
-        <div id="manage-group-user-div" class="w3-container" onclick="showContextDiv('remove-user-div')">
+        <div id="manage-group-user-div" class="w3-container" onclick=${onclick}>
         <div class="w3-container w3-cell w3-cell-middle">
             <span id="manage-group-user-icon-${index}" class="w3-badge w3-border w3-center user-icon">
             <p id="manage-group-user-icon-text-${index}" class="user-icon-text"></p>
@@ -465,16 +488,6 @@ function styleUserDiv(user, index) {
     document.getElementById(`manage-group-user-icon-text-${index}`).innerHTML = nameAbbrv;
     document.getElementById(`manage-group-user-name-${index}`).innerHTML = user.Name;
     document.getElementById(`manage-group-user-email-${index}`).innerHTML = user.Email;
-}
-
-// App entry point
-function onDeviceReady(polling = false) {
-    // StatusBar.overlaysWebView(false);
-    loadScript('initMap');
-
-    if (polling) {
-        setInterval(pollUserUpdates(), 4000);
-    }
 }
 
 function hideSplash(time, callback) {
@@ -606,7 +619,11 @@ function hideContextDiv(divID) {
     contextDiv.style.display = overlay.style.display = "none";
 }
 
-// Load the script required for google maps API
+function onDeviceReady() {
+    // initialize google maps api
+    loadScript('initMap');
+}
+
 function loadScript(callback) {
     let googleAPIKey = appSettings.googleAPIKey;
     let googleAPIUrl = "https://maps.googleapis.com/maps/api/js";
@@ -622,7 +639,6 @@ function loadScript(callback) {
     document.body.appendChild(script);
 }
 
-// Initalize google maps API
 function initMap() {
 
     let mapElement = document.getElementById('map-div');

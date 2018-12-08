@@ -8,9 +8,7 @@ function xhrURL(procedure, data) {
     });
     let queryParams = encodeQueryData(data);
 
-    let url = appSettings.apigURL +
-        "?" +
-        procParam +
+    let url = procParam +
         "&" +
         queryParams;
 
@@ -56,4 +54,8 @@ function hashToColor(userID) {
     let index = userID % colors.length;
 
     return `rgb(${colors[index]})`;
+}
+
+function logStatus(method, data, status) {
+    console.log(`${method} /?${data} ${status}`);
 }
