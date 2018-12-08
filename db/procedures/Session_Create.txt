@@ -1,0 +1,10 @@
+DROP PROCEDURE IF EXISTS `db_test_cafitzp1`.`Session_Create`;
+DELIMITER $$
+CREATE DEFINER=`cafitzp1`@`%` PROCEDURE `Session_Create`(IN token VARCHAR(255), IN startTime DATE, IN systemUserID INT)
+BEGIN
+    INSERT INTO `Session` (`Token`, `StartTime`, `EndTime`, `Active`, `SystemUserID`)
+    VALUES      (token, startTime, null, 1, systemUserID);
+    SELECT      LAST_INSERT_ID() as 'SessionID'
+                , token as 'Token';
+END
+$$

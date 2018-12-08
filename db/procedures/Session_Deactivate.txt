@@ -1,0 +1,11 @@
+DROP PROCEDURE IF EXISTS `db_test_cafitzp1`.`Session_Deactivate`;
+DELIMITER $$
+CREATE DEFINER=`cafitzp1`@`%` PROCEDURE `Session_Deactivate`(IN endTime DATE, IN `tid` VARCHAR(255))
+BEGIN
+    UPDATE      `Session`
+    SET         `EndTime` = endTime
+                , `Active` = 0
+    WHERE       `Token` = tid;
+    SELECT      tid as 'Token';
+END
+$$

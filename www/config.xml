@@ -11,7 +11,7 @@
     <!-- =================================================================== -->
 
 <widget 
-    id          = "edu.asu.cis430.sum18.dmazzola.tabsMobile2"  
+    id          = "edu.asu.cis430.fall18.cafitzp1.kitmobile"  
     version     = "1.0.0" 
     xmlns       = "http://www.w3.org/ns/widgets" 
     xmlns:gap   = "http://phonegap.com/ns/1.0">
@@ -20,14 +20,14 @@
     <!-- Change 'name', 'description', and 'author' tags below               -->
     <!-- =================================================================== -->
 
-    <name>Tabs Mobile 2</name>
+    <name>Kit Mobile</name>
 
     <description>
-        Another example of how to simulate a multipage app in a single page app
+        Mobile app for tracking members of a group
     </description>
 
-    <author email="dmazzola@asu.edu" href="http://www.asu.edu">
-        Dan Mazzola
+    <author email="cafitzp1@asu.edu" href="http://www.asu.edu">
+        Connor Fitzpatrick
     </author>
 
     <content src="index.html" />  <!-- the starting point of your hybrid app -->
@@ -61,8 +61,6 @@
     <preference name = "DisallowOverscroll"    value = "true"      />
     <preference name = "android-minSdkVersion" value = "14"        />
     <preference name = "phonegap-version"      value = "cli-6.5.0" />
-    
-
 
     <!-- =================================================================== -->
     <!-- access: allows network access to specific domains                   -->

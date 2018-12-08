@@ -4,14 +4,67 @@ body {
     width: 100vw;
 }
 
-#nav-bar {
-    height: 7vh;
-    display: block;
+.no-click-effect:focus,
+.no-click-effect:hover,
+.no-click-effect:active {
+    background-color: white !important;
 }
 
-.app-section {
-    top: 7vh;
-    height: 93vh;
+.no-click-effect-black:focus,
+.no-click-effect-black:hover,
+.no-click-effect-black:active {
+    background-color: black !important;
+    color: white !important;
+}
+
+.no-click-effect-blue:focus,
+.no-click-effect-blue:hover,
+.no-click-effect-blue:active {
+    background-color: #2196F3 !important;
+    color: white !important;
+}
+
+.no-click-effect-blue-rev:focus,
+.no-click-effect-blue-rev:hover,
+.no-click-effect-blue-rev:active {
+    background-color: white !important;
+    color: #2196F3 !important;
+}
+
+.button-primary:visited,
+.button-primary:hover {
+    color: #2196F3 !important
+}
+
+.button-secondary:visited,
+.button-secondary:hover {
+    color: black !important
+}
+
+.button-tertiary:visited,
+.button-tertiary:hover {
+    color: #9e9e9e !important
+}
+
+.app-div {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    top: 39px;
+    height: calc(100vh - 39px);
+    width: 100vw;
+    z-index: 0;
+}
+
+.app-section,
+#app-splash {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100vh;
+    width: 100vw;
+    transition: opacity .4s ease-out;
+    z-index: 0;
 }
 
 .side-nav-icon {
@@ -22,4 +75,211 @@ body {
     margin: 5px 28px -12px 28px;
     padding: 10px 0px;
     top: 50px;
+}
+
+.user-icon,
+.settings-user-icon {
+    height: 60px;
+    width: 60px;
+    color: white;
+    background-color: rgb(30, 234, 165);
+}
+
+.settings-user-icon {
+    height: 125px;
+    width: 125px;
+}
+
+.user-icon-text,
+.settings-user-icon-text {
+    font-weight: 500;
+    font-size: 24px;
+    margin: 10px 0px;
+}
+
+.settings-user-icon-text {
+    margin: 15.5px 0px;
+    font-size: 60px;
+}
+
+.login-form-inputs {
+    margin-top: 55vh;
+    padding: 0px 10px;
+}
+
+.flat-input {
+    box-shadow: none;
+    border-top: transparent !important;
+    border-left: transparent !important;
+    border-right: transparent !important;
+    border-bottom: transparent !important;
+}
+
+.context-menu {
+    top: 45%;
+    width: 80vw;
+    opacity: .85;
+}
+
+.context-menu hr {
+    margin: 0;
+}
+
+.context-menu a {
+    margin: 4px 0px;
+    color: #3399FF;
+}
+
+@media (max-width: 768px) {
+    .media-large {
+        padding: 0 10px;
+    }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+    .media-large {
+        padding: 0px 100px;
+    }
+}
+
+@media (min-width: 1025px) {
+    .media-large {
+        padding: 0px 275px;
+    }
+}
+
+/* login image does not look too well when small vertical height */
+@media (max-height: 489px) {
+    #login-form-image {
+        display: none;
+    }
+}
+
+@media (min-height: 490px) {
+    #login-form-image {
+        display: block;
+    }
+}
+
+@media (max-height: 489px) {
+    #login-form-input-div {
+        margin-top: 17vh;
+    }
+}
+
+@media (min-height: 490px) {
+    #login-form-input-div {
+        margin-top: 55vh;
+    }
+}
+
+
+#app-splash {
+    z-index: 1;
+}
+
+#side-nav {
+    display: none;
+    z-index: 4;
+    width: 75vw;
+    /* opacity: .8; */
+}
+
+#map-div {
+    z-index: 1;
+}
+
+#alert-group-div,
+#remove-user-div {
+    z-index: 4;
+}
+
+#invite-form label {
+    font-weight: 600;
+}
+
+#nav-bar {
+    /* height: 7vh; */
+    display: block;
+}
+
+#nav-header {
+    margin-left: 52px;
+    width: calc(100vw - 104px);
+    padding: 8px 0px;
+    /* height: 6.6vh; */
+}
+
+#nav-button {
+    padding-top: 4px;
+}
+
+#manage-group-user-div,
+.account-settings {
+    padding: 0px 15px 0px 15px;
+}
+
+#manage-group-user-div .username-text,
+#manage-group-user-div .user-email-text {
+    margin: 0 6px;
+}
+
+#manage-group-user-div .username-text {
+    font-weight: 600;
+    font-size: 18px;
+}
+
+#login-form {
+    min-height: 100%;
+    z-index: 0;
+}
+
+#login-form input,
+#login-form a {
+    margin: 10px 0px;
+    opacity: 0;
+    transition: opacity .4s ease-in;
+}
+
+#login-form-image {
+    position: absolute;
+    margin-top: 50vh;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#login-form-image.move {
+    transition: margin-top 0.25s ease;
+    margin-top: 33vh !important;
+}
+
+#account-settings-div input {
+    max-width: 50%;
+}
+
+#account-settings-div label {
+    font-weight: 600;
+}
+
+#account-settings-div button {
+    margin-bottom: 16px;
+}
+
+#account-settings-data-div {
+    margin: 16px -16px 16px -16px
+}
+
+#account-settings-button-div,
+#manage-group-button-div {
+    margin: 32px 16px 32px 16px
+}
+
+#app-login-div {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    top: 0px;
+    height: 100vh;
+    width: 100vw;
+    z-index: 0;
 }
